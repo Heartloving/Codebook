@@ -19,36 +19,42 @@ def show_anns(annFile, imageFile, resultFile):
     all_imgs = glob.glob(imageFile + '/*.jpg')
     print(len(all_imgs))
     #     img_lists = []
-
+    cnt = 0
     coco = COCO(annFile)
-    #for img_id in range(len(all_imgs)):
-    for img_id in range(500):
+    for img_id in range(len(all_imgs)):
+
+    #for img_id in range(500):
         img = coco.loadImgs(img_id)
         #print(img[0])
         image = cv2.imread(os.path.join(imageFile, img[0]['file_name']))
-        print(image)
+        #print(image)
 
 
         annIds = coco.getAnnIds(imgIds=img_id, iscrowd=None)
-        anns = coco.loadAnns(annIds)
+        if len(annIds)>100:
+            cnt += 1
+    print(cnt)
+
+
+        #anns = coco.loadAnns(annIds)
         #print(anns)
-        for n in range(len(anns)):
-            x, y, w, h = anns[n]['bbox']
-            x, y, w, h = int(x), int(y), int(w), int(h)
-            #print(x, y, w, h)
-            cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255))
-
-            cv2.putText(image,classes[anns[n]['category_id']], (x, y),
-                        cv2.FONT_HERSHEY_PLAIN, 1.0, ( 255, 0, 0), 1)#显示类别标注信息
-            #cv2.putText(image,str(anns[n]['bbox']), (x, y + h),
-            #            cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 0, 0), 1)#显示bbox坐标信息
-
-        if not os.path.exists(resultFile):
-            os.makedirs(resultFile)
-        #保存文件时必须要先新建文件夹,如果不新建文件夹会无法保存图片，而且不会报错提示
-        #print(resultFile +'result'+ img[0]['file_name'])
-        cv2.imwrite(resultFile +'result'+ img[0]['file_name'], image)
-        #cv2.imwrite(os.path.join(resultFile, img[0]['file_name']), image)
+        # for n in range(len(anns)):
+        #     x, y, w, h = anns[n]['bbox']
+        #     x, y, w, h = int(x), int(y), int(w), int(h)
+        #     #print(x, y, w, h)
+        #     cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255))
+        #
+        #     cv2.putText(image,classes[anns[n]['category_id']], (x, y),
+        #                 cv2.FONT_HERSHEY_PLAIN, 1.0, ( 255, 0, 0), 1)#显示类别标注信息
+        #     #cv2.putText(image,str(anns[n]['bbox']), (x, y + h),
+        #     #            cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 0, 0), 1)#显示bbox坐标信息
+        #
+        # if not os.path.exists(resultFile):
+        #     os.makedirs(resultFile)
+        # #保存文件时必须要先新建文件夹,如果不新建文件夹会无法保存图片，而且不会报错提示
+        # #print(resultFile +'result'+ img[0]['file_name'])
+        # cv2.imwrite(resultFile +'result'+ img[0]['file_name'], image)
+        # #cv2.imwrite(os.path.join(resultFile, img[0]['file_name']), image)
 
     print("生成图片存在{}".format(resultFile))
 

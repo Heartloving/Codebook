@@ -76,6 +76,7 @@ class  Converter:
 							   "category_id": int(ann[5]),#类别
 							   "id": annotation_id,#bbox id
 							   }
+
 				annotation_msg.append(one_ann_msg)
 				annotation_id += 1 #bbox id 加一
 
@@ -130,7 +131,7 @@ class  Converter:
 
 if __name__ == '__main__':
 	#路径是D:\\Education\\CODE\\jupter\\VisDrone2018 - DET - val\\images
-	src_path = "../DataSets/VisDrone2019/VisDrone2018-DET-val"#linux 路径格式
+	src_path = "/media/xddz/本地磁盘/Learning/CODE_DATA/DataSets/VisDrone2019/VisDrone2018-DET-val"#linux 路径格式
 	#src_path = "../DataSets/VisDrone2019/VisDrone2018-DET-train"  # linux 路径格式
 	#src_path = "D:\\Education\\CODE\\jupter\\VisDrone2018-DET-val"#win 路径格式
 	conver = Converter(src_path)
